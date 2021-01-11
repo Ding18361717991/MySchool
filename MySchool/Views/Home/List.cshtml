@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Model.Student>
+@using Model
+
+
+@{
+    ViewBag.Title = "List";
+}
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title></title></head>
+<body>
+    @{ var pager = ViewBag.pager;}
+    @using (Html.BeginForm("List", "Home", FormMethod.Post))
+    {
+        <table style="width: 60% ">
+            <tr>
+                <td>编号</td>
+                <td>LoginPwd</td>
+                <td>学生姓名</td>
+                <td>性别</td>
+                <td>年级</td>
+                <td>电话</td>
+                <td>住址</td>
+                <td>日期</td>
+                <td>邮箱</td>
+                <td>操作</td>
+
+            </tr>
+
+            @foreach (var item in pager.InfoList)
+            { 
+                <tr>
+                    <td>@item.StudentNo</td>
+                    <td>@item.LoginPwd</td>
+                    <td>@item.StudentName</td>
+
+
+                    @if (item.Sex)
+                    {
+                        <td>男</td>
+                    }
+                    else
+                    {
+                        <td>女</td>
+                    }
+                    <td>@item.GradeName</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Address</td>
+                    <td>@item.BornDate</td>
+                    <td>@item.Email</td>
+                    <td>
+                        @Html.ActionLink("修改", "Update", "Home", new { id = item.StudentNo }, null)
+                        @Html.ActionLink("删除", "del", "Home", new { id = item.StudentNo }, new { onclick = "return confirm('确定删除吗?')" })
+                    </td>
+                </tr>          
+            }
+
+        </table>
+    }
+    <a href="/Home/List">首页</a>
+    @for (int i = 1; i <= pager.PageCount; i++)
+    {
+        
+        @*<a href="/Home/List?pageSize=   1&pageIndex=1">@i</a>*@
+        <a href="/Home/List/@pager.PageSize/@i">@i</a>
+        
+    }
+    <a href="/Home/List/@pager.PageCount">尾页</a>
+</body>
+</html>
+
+
+

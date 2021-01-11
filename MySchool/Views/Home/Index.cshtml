@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Model.Student>
+@using Model
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title></title></head>
+<body>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    { 
+        <table style="width:100%"> 
+            <tr>
+                <td>编号</td>
+                <td>LoginPwd</td>
+                <td>学生姓名</td>
+                <td>性别</td>
+                <td>年级</td>
+                <td>电话</td>
+                <td>住址</td>
+                <td>日期</td>
+                <td>邮箱</td>
+                <td>操作</td>
+
+            </tr>
+
+            @foreach (Student item in Model)
+            { 
+                <tr>
+                    <td>@item.StudentNo</td>
+                    <td>@item.LoginPwd</td>
+                    <td>@item.StudentName</td>
+
+
+                    @if(item.Sex){
+                        <td>男</td>
+                    }else{
+                        <td>女</td>
+                    }
+                    <td>@item.GradeName</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Address</td>
+                    <td>@item.BornDate</td>
+                    <td>@item.Email</td>
+                    <td>
+                        @Html.ActionLink("修改", "Update", "Home", new { id = item.StudentNo },null)
+                        @Html.ActionLink("删除", "del", "Home", new { id = item.StudentNo }, new { onclick="return confirm('确定删除吗?')" })
+                    </td>
+                </tr>          
+            }
+
+        </table>
+    }
+</body>
+</html>
+

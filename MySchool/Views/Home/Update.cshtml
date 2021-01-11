@@ -1,0 +1,113 @@
+﻿@model Model.Student
+
+
+
+@{
+    ViewBag.Title = "Update";
+    
+    
+}
+
+@section scripts{
+
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    
+    <script>
+        $(function () {
+            $("#frm").submit(function () {
+                if ($("#StudentName").val() == "") {
+                    alert("用户名不能为空");
+                    return false;
+                }
+                if ($("#Phone").val() == "") {
+                    alert("电话不能为空");
+                    return false;
+                }
+                if ($("#Address").val() == "") {
+                    alert("住址不能为空");
+                    return false;
+                }
+                if ($("#Email").val() == "") {
+                    alert("邮箱不能为空");
+                    return false;
+                }
+            });
+        });
+    </script>
+
+}
+
+@using (Html.BeginForm("Update", "Home", FormMethod.Post, new {  @Id="frm" }))
+{ 
+    <table>
+        <tr>
+            <td>
+                @Html.Hidden("StudentNo")
+            </td>
+        </tr>
+        <tr>
+            <td>LoginPwd</td>
+            <td>
+                @Html.TextBox("LoginPwd", Model.LoginPwd)
+            </td>
+        </tr>
+        <tr>
+            <td>姓名</td>
+            <td>
+                @*@Html.TextBox("StudentName", Model.StudentName)*@
+                @Html.EditorFor(model => model.StudentName)
+            </td>
+        </tr>
+        <tr>
+            <td>性别</td>
+            <td>
+                @if (Model.Sex == true)
+                {
+                    <input type="radio" name="Sex" value="true" checked="checked" /><text>男</text>
+                    <input type="radio" name="Sex" value="false" /><text>女</text>
+                }
+                else
+                {
+                    <input type="radio" name="Sex" value="true" /><text>男</text>
+                    <input type="radio" name="Sex" value="false" checked="checked" /><text>女</text>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>年级：</td>
+            <td>
+                @Html.DropDownList("GradeId", (IEnumerable<SelectListItem>)ViewBag.sslist)
+            </td>
+        </tr>
+        <tr>
+            <td>电话</td>
+            <td>@*@Html.TextBox("Phone", Model.Phone)*@
+                @Html.EditorFor(model => model.Phone)
+            </td>
+        </tr>
+        <tr>
+            <td>住址</td>
+            <td>@*@Html.TextBox("Address", Model.Address)*@
+                @Html.EditorFor(model => model.Address)
+            </td>
+        </tr>
+        <tr>
+            <td>日期</td>
+            <td>
+                <input type="date" value="@Model.BornDate.Date.ToString("yyyy-MM-dd")" name="BornDate"/>
+            </td>
+        </tr>
+        <tr>
+            <td>邮箱</td>
+            <td>@*@Html.TextBox("Email", Model.Email)*@
+                @Html.EditorFor(model => model.Email)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="submit" value="修改" />
+            </td>
+        </tr>
+    </table>
+}
